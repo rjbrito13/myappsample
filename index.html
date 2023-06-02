@@ -5,10 +5,87 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        .error {
+          color: red;
+        }
+      </style>
 </head>
 <body>
-    <h1>This is my app! heyy</h1>
+    <h1>This is my app!</h1>
     <h2>Login Form</h2>
+
+    <form id="myForm">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+          </tr>
+          <tr>
+            <td><input type="text" name="name" required></td>
+            <td><input type="email" name="email" required></td>
+            <td><input type="number" name="age" required></td>
+          </tr>
+        </table>
+        <button type="submit">Submit</button>
+      </form>
+
+      <script>
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent form submission
+    
+          // Get form values
+          var name = document.getElementsByName("name")[0].value;
+          var email = document.getElementsByName("email")[0].value;
+          var age = document.getElementsByName("age")[0].value;
+    
+          // Validate form values
+          var errors = [];
+    
+          if (name === "") {
+            errors.push("Name is required");
+          }
+    
+          if (email === "") {
+            errors.push("Email is required");
+          } else if (!validateEmail(email)) {
+            errors.push("Invalid email format");
+          }
+    
+          if (age === "") {
+            errors.push("Age is required");
+          } else if (isNaN(age)) {
+            errors.push("Age must be a number");
+          }
+    
+          // Display errors or submit the form
+          var errorContainer = document.getElementById("errorContainer");
+          if (errors.length > 0) {
+            var errorList = "<ul>";
+            errors.forEach(function(error) {
+              errorList += "<li>" + error + "</li>";
+            });
+            errorList += "</ul>";
+            errorContainer.innerHTML = errorList;
+          } else {
+            errorContainer.innerHTML = "";
+            submitForm();
+          }
+        });
+    
+        function validateEmail(email) {
+          // Basic email validation regex
+          var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          return regex.test(email);
+        }
+    
+        function submitForm() {
+          // Code to submit the form or perform any desired action
+          alert("Form submitted successfully!");
+        }
+      </script>
 
 
     
